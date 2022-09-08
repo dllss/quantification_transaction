@@ -60,6 +60,17 @@ def getNormalData():
         # 接口限制访问200次/分钟, 加一点微小的延时防止被ban
         time.sleep(0.301)
         # 日线行情
+        # ts_code: 股票代码
+        # trade_date: 交易日期
+        # open: 开盘价
+        # high: 最高价
+        # low: 最低价
+        # close: 收盘价
+        # pre_close: 昨收价(前复权)
+        # change: 涨跌额
+        # pct_chg: 涨跌幅 （未复权，如果是复权请用 通用行情接口 ）
+        # vol: 成交量 （手）
+        # amount: 成交额 （千元）
         df = proApi.daily(
             ts_code=i,
             start_date=startDate,
@@ -80,6 +91,7 @@ def getIndexData():
     df = proApi.index_basic(market='SZSE')
     df.to_csv(os.path.join(save_path, 'SZSE.csv'), index=False)
 
+    # !!! 积分不够
     # 获取指数历史信息
     # 这里获取几个重要的指数 【上证综指, 上证50, 上证A指, 深证成指, 深证300, 中小300, 创业300, 中小板综, 创业板综】
     importantIndexArr = [
@@ -93,16 +105,16 @@ def getIndexData():
         '399101.SZ',
         '399102.SZ',
     ]
-    for i in importantIndexArr:
-        path = os.path.join(save_path, oldDataFolderName, i + '_NormalData.csv')
-        df = proApi.index_daily(
-            ts_code=i,
-            start_date=startDate,
-            end_date=endDate,
-            fields='ts_code, trade_date, open, high, low, close, pre_close, change, pct_chg, vol, amount',
-        )
-        df = df.sort_values('trade_date', ascending=True)
-        df.to_csv(path, index=False)
+    # for i in importantIndexArr:
+    #     path = os.path.join(save_path, oldDataFolderName, i + '_NormalData.csv')
+    #     df = proApi.index_daily(
+    #         ts_code=i,
+    #         start_date=startDate,
+    #         end_date=endDate,
+    #         fields='ts_code, trade_date, open, high, low, close, pre_close, change, pct_chg, vol, amount',
+    #     )
+    #     df = df.sort_values('trade_date', ascending=True)
+    #     df.to_csv(path, index=False)
 
 
 if __name__ == '__main__':
