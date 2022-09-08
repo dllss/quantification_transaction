@@ -31,12 +31,10 @@ def getNoramlData():
                 encoding='ANSI')
 
     print('获得上市股票总数：', len(pool) - 1)
-    j = 1
-    for i in pool.ts_code:
+    for j, i in enumerate(pool.ts_code, start=1):
         print('正在获取第%d家，股票代码%s.' % (j, i))
         # 接口限制访问200次/分钟，加一点微小的延时防止被ban
         path = os.path.join(save_path, 'OldData', i + '_NormalData.csv')
-        j += 1
         # if os.path.exists(path):
         #     continue
         time.sleep(0.301)
